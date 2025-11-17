@@ -4,7 +4,6 @@ import { Trending } from "../Trending";
 export const Header = ({ searchTerm, setSearchTerm }) => {
   return (
     <header>
-      <img src="/logo.png" alt="" />
       <img src="/hero-img.png" alt="movie posters" />
 
       <h1>
