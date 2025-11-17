@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Search } from "./components/Search";
 import axios from "axios";
 import { Loading } from "./components/Loading";
+import { MovieCard } from "./components/MovieCard";
+import { useDebounce } from "react-use";
 
 /* ===============================
    API CONFIGURATION
 ================================ */
-const API_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
+const API_BASE_URL = "https://api.themoviedb.org/3/";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const API_OPTIONS = {
@@ -27,16 +29,22 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [debounceSearchTerm, setDebouncedSearchTerm] = useState('')
+
+    // use debounce
+    useDebounce(() => {
+        setDebouncedSearchTerm(searchTerm);
+    }, 750, [searchTerm]);
 
     /* -------------------------------
        FETCH MOVIES FUNCTION
     -------------------------------- */
-    const fetchMovies = async () => {
+    const fetchMovies = async (query = '') => {
         setIsLoading(true);
         setErrorMessage("");
 
         try {
-            const endpoint = `${API_BASE_URL}?sort_by=popularity.desc`;
+            const endpoint = query ? `${API_BASE_URL}search/movie?query=${encodeURIComponent(query)}` : `${API_BASE_URL}discover/movie?sort_by=popularity.desc`;
             const response = await axios.get(endpoint, API_OPTIONS);
 
             const movieData = response.data;
@@ -55,8 +63,8 @@ const App = () => {
        INITIAL MOVIE FETCH
     -------------------------------- */
     useEffect(() => {
-        fetchMovies();
-    }, []);
+        fetchMovies(debounceSearchTerm);
+    }, [debounceSearchTerm]);
 
     /* -------------------------------
        UI RENDER
@@ -79,18 +87,16 @@ const App = () => {
                 <section className="all-movies mt-5 ">
                     <h2>All Movies</h2>
 
-                    {isLoading ? (<Loading />
-                    ) : errorMessage ? (
-                        <p className="text-red-500">{errorMessage}</p>
-                    ) : (
-                        <ul>
-                            {movies.map((movie) => (
-                                <p key={movie.id} className="text-white">
-                                    {movie.title}
-                                </p>
-                            ))}
-                        </ul>
-                    )}
+                    {isLoading ? (<Loading />) :
+                        errorMessage ? (<p className="text-red-500">{errorMessage}</p>) :
+                            (
+                                <ul>
+                                    {movies.map(movie => (
+                                        <MovieCard key={movie.id} movie={movie} />
+                                    ))}
+                                </ul>
+                            )
+                    }
                 </section>
             </div>
         </main>
