@@ -1,4 +1,8 @@
-export const Search = ({ searchTerm, setSearchTerm }) => {
+import { useContext } from "react";
+import { searchContext } from "../context/searchContext";
+
+export const Search = () => {
+  const {searchTerm, setSearchTerm} = useContext(searchContext)
   return (
     <div className="search">
       <div>

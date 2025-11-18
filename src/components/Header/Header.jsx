@@ -1,7 +1,7 @@
 import { Search } from "../Search";
 import { Trending } from "../Trending";
 
-export const Header = ({ searchTerm, setSearchTerm }) => {
+export const Header = () => {
   return (
     <header>
       <img src="/hero-img.png" alt="movie posters" />
@@ -15,7 +15,7 @@ export const Header = ({ searchTerm, setSearchTerm }) => {
       <Trending />
 
       {/* SEARCH */}
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Search/>
     </header>
   );
 };

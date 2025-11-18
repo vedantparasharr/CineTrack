@@ -4,7 +4,7 @@ import { useDebounce } from "react-use";
 import { Header } from "./components/Header/Header";
 import { MovieGrid } from "./components/Movie/MovieGrid";
 import { Loading } from "./components/UI/Loading";
-
+import { searchContext } from "./context/searchContext";
 // Import API functions
 import { fetchMovies } from "./api/tmdb";
 
@@ -57,14 +57,12 @@ const App = () => {
      RENDER
   -------------------------------- */
   return (
+    <searchContext.Provider value={{searchTerm, setSearchTerm}} >
     <main>
       <div className="pattern"></div>
 
       <div className="wrapper">
-        <Header
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
+        <Header/>
 
         <section className="all-movies mt-5">
           <h2>All Movies</h2>
@@ -79,6 +77,7 @@ const App = () => {
         </section>
       </div>
     </main>
+    </searchContext.Provider>
   );
 };
 
