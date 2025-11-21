@@ -1,4 +1,5 @@
 import { MoviePoster } from "../Movie/MoviePoster";
+import { Link } from "react-router-dom";
 
 export const TrendingList = ({ trendingMovies }) => {
   return (
@@ -6,10 +7,13 @@ export const TrendingList = ({ trendingMovies }) => {
       {trendingMovies.map((movie, index) => (
         <li key={movie.id}>
           <p>{index + 1}</p>
-          <MoviePoster
-            path={movie.poster_path}
-            title={movie.title}
-          />
+
+          <Link to={`/movie/${movie.id}`}>
+            <MoviePoster
+              path={movie.poster_path}
+              title={movie.title}
+            />
+          </Link>
         </li>
       ))}
     </ul>
