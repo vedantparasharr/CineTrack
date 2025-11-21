@@ -1,5 +1,5 @@
 import { MoviePoster } from "./MoviePoster";
-
+import { Link } from "react-router-dom";
 export const MovieCard = ({ movie }) => {
   const {
     title,
@@ -13,7 +13,7 @@ export const MovieCard = ({ movie }) => {
   const year = release_date ? release_date.split("-")[0] : "N/A";
 
   return (
-    <div className="movie-card">
+    <Link to={`/movie/${movie.id}`} className="movie-card block">
       <MoviePoster path={poster_path} title={title} />
 
       <div className="mt-4">
@@ -32,6 +32,6 @@ export const MovieCard = ({ movie }) => {
         <span>•</span>
         <p className="year">{year}</p>
       </div>
-    </div>
+    </Link>
   );
 };

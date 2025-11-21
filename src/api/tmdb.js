@@ -14,3 +14,6 @@ export const fetchMovies = (query) =>
     : API.get("discover/movie?sort_by=popularity.desc");
 
 export const fetchTrending = () => API.get("movie/top_rated");
+
+export const fetchMovieDetails = (id) => 
+  API.get(`movie/${id}?append_to_response=videos,credits`);
