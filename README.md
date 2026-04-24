@@ -3,7 +3,7 @@
 CineTrack is a React + Vite movie discovery app powered by The Movie Database (TMDB). It supports searching movies with debounced input, browsing top-rated titles, and opening a dedicated details page for each movie.
 
 ## Overview  
-
+  
 - Browse popular movies by default.
 - Search movies with a debounced query to reduce API calls.
 - View top-rated movies in a horizontal trending strip.
